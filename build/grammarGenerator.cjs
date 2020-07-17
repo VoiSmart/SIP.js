@@ -45,7 +45,9 @@ const parser = pegjs.generate(grammarContents, {
     "WWW_Authenticate",
     "challenge",
     "sipfrag",
-    "Referred_By"
+    "Referred_By",
+    "Call_Info",
+    "Alert_Info"
   ],
   output: "source",
   optimize: "size",

@@ -404,6 +404,47 @@ Reason_Phrase   = (reserved / unreserved / escaped
 
 Allow_Events = event_type (COMMA event_type)*
 
+// Call-Info
+
+Call_Info = LAQUOT uri_scheme_host RAQUOT (SEMI ci_param)*
+
+uri_scheme_host = uri_scheme ":" host {
+                    options = options || { data: {}};
+
+                    if (options.data.scheme && options.data.host) {
+                      options.data.uri = {
+                        scheme: options.data.scheme,
+                        host: options.data.host,
+                        host_type: options.data.host_type
+                      };
+                      delete options.data.scheme;
+                      delete options.data.host;
+                      delete options.data.host_type;
+                    }
+                  }
+
+ci_param    = "answer-after"i EQUAL delay: DIGIT+ {
+                options = options || { data: {}};
+
+                if (options.startRule === 'Call_Info') {
+                  options.data.answer_after = parseInt(delay.join(''));
+                }
+              }
+              / generic_param
+
+// Alert-Info
+
+Alert_Info  = LAQUOT uri_scheme_host RAQUOT (SEMI ai_param)*
+
+ai_param    = "info"i EQUAL info: word {
+                  options = options || { data: {}}
+                  options.data.info = info;
+                }
+              / "delay"i EQUAL delay: DIGIT+ {
+                  options = options || { data: {}}
+                  options.data.delay = parseInt(delay.join(''));
+                }
+              / generic_param
 
 // CALL-ID
 
