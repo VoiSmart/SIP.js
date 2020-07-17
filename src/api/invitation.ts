@@ -448,7 +448,17 @@ export class Invitation extends Session {
     // reject INVITE with 487 status code
     this.incomingInviteRequest.reject({ statusCode: 487 });
 
+    if (this.delegate?.onCancel) {
+      this.delegate.onCancel(message);
+    }
+
     this.stateTransition(SessionState.Terminated);
+  }
+
+  public _onTransportError(error: Error): void {
+    if (this.delegate?.onTransportError) {
+      this.delegate.onTransportError(error);
+    }
   }
 
   /**

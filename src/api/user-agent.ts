@@ -694,6 +694,7 @@ export class UserAgent {
             // nothing more than informational hook into the core. That is, if you think
             // you should be trying to deal with a transport error here, you are likely wrong.
             this.logger.error("A transport error has occurred while handling an incoming INVITE request.");
+            invitation._onTransportError(error);
           }
         };
 

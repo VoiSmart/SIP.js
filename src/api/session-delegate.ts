@@ -52,6 +52,12 @@ export interface SessionDelegate {
   onRefer?(referral: Referral): void;
 
   /**
+   * Called upon receiving an incoming in dialog CANCEL request.
+   * @param referral - The referral.
+   */
+  onCancel?(cancel: IncomingRequestMessage): void;
+
+  /**
    * Called upon creating a SessionDescriptionHandler.
    *
    * @remarks
@@ -77,4 +83,6 @@ export interface SessionDelegate {
    * @param provisional - True if created provisionally.
    */
   onSessionDescriptionHandler?(sessionDescriptionHandler: SessionDescriptionHandler, provisional: boolean): void;
+
+  onTransportError?(error: Error): void;
 }
