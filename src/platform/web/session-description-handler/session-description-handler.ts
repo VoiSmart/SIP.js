@@ -54,6 +54,7 @@ export class SessionDescriptionHandler implements SessionDescriptionHandlerDefin
   /** The peer connection delegate. */
   protected _peerConnectionDelegate: PeerConnectionDelegate | undefined;
 
+  private iceCandidateTimeoutId: number | undefined;
   private iceGatheringCompletePromise: Promise<void> | undefined;
   private iceGatheringCompleteTimeoutId: number | undefined;
   private iceGatheringCompleteResolve: ResolveFunction | undefined;
@@ -635,6 +636,12 @@ export class SessionDescriptionHandler implements SessionDescriptionHandlerDefin
       clearTimeout(this.iceGatheringCompleteTimeoutId);
       this.iceGatheringCompleteTimeoutId = undefined;
     }
+
+    if (this.iceCandidateTimeoutId !== undefined) {
+      clearTimeout(this.iceCandidateTimeoutId);
+      this.iceCandidateTimeoutId = undefined;
+    }
+
     // resolve and cleanup promise if need be
     if (this.iceGatheringCompletePromise !== undefined) {
       this.logger.debug("SessionDescriptionHandler.iceGatheringComplete - resolving promise");
@@ -712,6 +719,13 @@ export class SessionDescriptionHandler implements SessionDescriptionHandlerDefin
 
     peerConnection.onicecandidate = (event): void => {
       this.logger.debug(`SessionDescriptionHandler.onicecandidate`);
+
+      if (!this.iceCandidateTimeoutId && this.sessionDescriptionHandlerConfiguration?.iceCandidatesTimeout) {
+        this.iceCandidateTimeoutId = setTimeout(() => {
+          this.iceGatheringComplete();
+        }, this.sessionDescriptionHandlerConfiguration?.iceCandidatesTimeout);
+      }
+
       if (this._peerConnectionDelegate?.onicecandidate) {
         this._peerConnectionDelegate.onicecandidate(event);
       }

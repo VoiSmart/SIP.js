@@ -28,10 +28,12 @@ export function defaultSessionDescriptionHandlerFactory(
 
     // make sure we allow `0` to be passed in so timeout can be disabled
     const iceGatheringTimeout = options?.iceGatheringTimeout !== undefined ? options?.iceGatheringTimeout : 5000;
+    const iceCandidatesTimeout = options?.iceCandidatesTimeout !== undefined ? options.iceCandidatesTimeout : 1000;
 
     // merge passed factory options into default session description configuration
     const sessionDescriptionHandlerConfiguration: SessionDescriptionHandlerConfiguration = {
       iceGatheringTimeout,
+      iceCandidatesTimeout,
       peerConnectionConfiguration: {
         ...defaultPeerConnectionConfiguration(),
         ...options?.peerConnectionConfiguration

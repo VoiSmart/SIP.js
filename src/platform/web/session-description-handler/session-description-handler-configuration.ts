@@ -11,6 +11,12 @@ export interface SessionDescriptionHandlerConfiguration {
   iceGatheringTimeout?: number;
 
   /**
+   * The maximum duration to wait after first ICE candidate received.
+   * If zero, no timeout.
+   */
+  iceCandidatesTimeout?: number;
+
+  /**
    * Peer connection options.
    */
   peerConnectionConfiguration?: RTCConfiguration;

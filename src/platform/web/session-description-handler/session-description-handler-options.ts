@@ -40,6 +40,12 @@ export interface SessionDescriptionHandlerOptions extends SessionDescriptionHand
   iceGatheringTimeout?: number;
 
   /**
+   * The maximum duration to wait after first ICE candidate received.
+   * If zero, no timeout.
+   */
+  iceCandidatesTimeout?: number;
+
+  /**
    * Offer options to use when creating an offer.
    */
   offerOptions?: RTCOfferOptions;
