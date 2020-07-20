@@ -90,6 +90,8 @@ export interface UserAgentOptions {
    */
   displayName?: string;
 
+  contactName?: string;
+
   /**
    * Force adding rport to Via header.
    * @defaultValue `false`
