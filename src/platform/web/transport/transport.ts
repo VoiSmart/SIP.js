@@ -193,6 +193,10 @@ export class Transport implements TransportDefinition {
     return this._send(message);
   }
 
+  public enableSipTrace(enable: boolean): void {
+    this.configuration.traceSip = enable;
+  }
+
   private _connect(): Promise<void> {
     this.logger.log(`Connecting ${this.server}`);
 

@@ -560,6 +560,10 @@ export class UserAgent {
     return new Inviter(this, targetURI, options);
   }
 
+  public enableBuiltinLogs(enable: boolean): void {
+    this.loggerFactory.builtinEnabled = enable;
+  }
+
   /**
    * Attempt reconnection up to `maxReconnectionAttempts` times.
    * @param reconnectionAttempt - Current attempt number.
