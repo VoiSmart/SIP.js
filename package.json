@@ -63,7 +63,7 @@
     "node": ">=10.0"
   },
   "scripts": {
-    "prepare": "npm run build-and-test",
+    "prepare": "npm run build",
     "prebuild": "npm run lint",
     "generate-grammar": "node build/grammarGenerator.cjs",
     "build-reg-bundle": "webpack --progress --config build/webpack.config.cjs --env.buildType reg",
