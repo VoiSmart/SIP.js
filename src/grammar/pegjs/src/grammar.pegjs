@@ -125,7 +125,7 @@ userinfo        = user (":" password)? "@" {
                     options = options || { data: {}};
                     options.data.user = decodeURIComponent(text().slice(0, -1));}
 
-user            = ( unreserved / escaped / user_unreserved )+
+user            = ( unreserved / escaped / user_unreserved / "#" )+
 
 user_unreserved = "&" / "=" / "+" / "$" / "," / ";" / "?" / "/"
 
